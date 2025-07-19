@@ -5,8 +5,9 @@ import (
 	"os"
 	"slices"
 
-	"github.com/headboot/track-task/commands"
+	"github.com/headboot/track-task/common"
 	"github.com/headboot/track-task/controller"
+	"github.com/headboot/track-task/model/commands"
 )
 
 func main() {
@@ -21,13 +22,11 @@ func main() {
 	command, err := getCommandFromArg(args[commands.CommandIndex])
 
 	if err != nil || command == commands.UnknownCommand {
-		fmt.Println(err)
-		os.Exit(1)
+		common.EndWithErr(err)
 	}
 
 	if error := checkCommandArg(command, &args); error != nil {
-		fmt.Println(error)
-		os.Exit(1)
+		common.EndWithErr(error)
 	}
 
 	controller.StartCommand(command, args[commands.CommandIndex+1:])
@@ -45,10 +44,12 @@ func getCommandFromArg(commandArg string) (commands.Command, error) {
 }
 
 func checkCommandArg(cmd commands.Command, args *[]string) error {
-	if slices.Contains(commands.CommandsNeedsThreeArgs, cmd) && len(*args) == 3 {
+	if slices.Contains(commands.CommandsNeed3Args, cmd) && len(*args) == 3 {
 		return nil
-	} else if (len(*args) == 2) && (!slices.Contains(commands.CommandsNeedsThreeArgs, cmd)) {
+	} else if (len(*args) == 2) && (!slices.Contains(commands.CommandsNeed3Args, cmd)) {
 		return nil
+	} else if len(*args) == 4 && (slices.Contains(commands.CommandsNeed4Args, cmd)) {
+		  return nil
 	}
 	return fmt.Errorf("too many or not enough arguments!!!!! use --help")
 }

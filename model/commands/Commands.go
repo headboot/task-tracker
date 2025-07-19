@@ -16,8 +16,12 @@ const (
 	UnknownCommand Command = 0
 )
 
-var CommandsNeedsThreeArgs = []Command{
-	Add, Update, Delete, MarkProgress, MarkDone,
+var CommandsNeed3Args = []Command{
+	Add, Delete, MarkProgress, MarkDone,
+}
+
+var CommandsNeed4Args = []Command {
+	Update,
 }
 
 var ComandsMap = map[string]Command{
