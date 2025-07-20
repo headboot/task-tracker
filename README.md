@@ -3,6 +3,10 @@
 CLI task tracker for controlling your tasks without GUI
 keeps tasks in JSON, controlled through intuitive commands
 
+![help](./assets/help.png)
+
+![list](./assets/list.png)
+
 ## Features
 - ➕  Add new task with description
 - ✏️ Update the description of an existing task.
